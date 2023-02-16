@@ -9,7 +9,7 @@ public Plugin myinfo =
 {
 	name = "[10awp] Return Old Awp",
 	author = "bklol, StefanX",
-	description = "Retrun old awp.",
+	description = "Return old awp.",
 	version = "1.0",
 	url = "https://github.com/stefanx111/10awp"
 };
