@@ -5,16 +5,27 @@
 
 #define primary_clip_size 20
 
+public Plugin myinfo =
+{
+	name = "[10awp] Return Old Awp",
+	author = "bklol, StefanX",
+	description = "Retrun old awp.",
+	version = "1.0",
+	url = "https://github.com/stefanx111/10awp"
+};
+
 Handle hGetCCSWeaponData;
-char sig[] = "\x55\x89\xE5\x53\x83\xEC\x04\x8B\x45\x08\x85\xC0\x74\x4A\x8B\x15";
 
 public void OnPluginStart()  
 {
+	GameData gd = LoadGameConfigFile("10awp.games");
+	if (!gd) SetFailState("[10awp] Could not initialize 10awp.games file");
 	StartPrepSDKCall(SDKCall_Raw);
-	PrepSDKCall_SetSignature(SDKLibrary_Server, sig, sizeof(sig) - 1);
+	PrepSDKCall_SetFromConf(gd, SDKConf_Signature, "GetCCSWeaponDataFromDef");
 	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
 	hGetCCSWeaponData = EndPrepSDKCall();
-	if(!hGetCCSWeaponData) SetFailState("Could not initialize call to GetCCSWeaponDataFromDef");
+	if(!hGetCCSWeaponData) SetFailState("[10awp] Could not initialize call to GetCCSWeaponDataFromDef");
+	CloseHandle(gd);
 }
 
 public void OnMapStart()  
